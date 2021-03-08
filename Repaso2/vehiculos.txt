@@ -1,0 +1,15 @@
+123
+honda
+2021
+negro
+100
+456
+Toyota
+1999
+azul
+50
+0
+Mazda
+2018
+blanco
+95
