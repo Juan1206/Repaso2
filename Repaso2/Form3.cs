@@ -141,7 +141,9 @@ namespace Repaso2
             dataGridView3.DataSource = null;
             dataGridView3.DataSource = datos;
             dataGridView3.Refresh();
-
+            float mayorprom = datos.Max(ve => ve.Total_a_pagar);
+            Calculo mayor = datos.OrderByDescending(ve => ve.Total_a_pagar).First();
+            label3.Text =  "el vehiculo con mas kilometros recorridos tiene un total de: "+ Convert.ToString( l3[0].Kilometros)+" Kilometros";
         }
     }
 }
