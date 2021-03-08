@@ -30,29 +30,42 @@ namespace Repaso2
 
         private void button2_Click(object sender, EventArgs e)
         {
-            
-            Vehiculo vehiculoTemp = new Vehiculo();
-            vehiculoTemp.Placa = Int32.Parse(textBox1.Text);
-            vehiculoTemp.Marca = textBox2.Text;
-            vehiculoTemp.Modelo = textBox3.Text;
-            vehiculoTemp.Color = textBox4.Text;
-            vehiculoTemp.Precio = float.Parse(textBox5.Text);
-            vehiculos.Add(vehiculoTemp);
-           
 
-            FileStream stream = new FileStream("vehiculos.txt", FileMode.OpenOrCreate, FileAccess.Write);
-
-            StreamWriter writer = new StreamWriter(stream);
-
-            foreach (var v in vehiculos)
+            //VERIFICAR SI YA EXISTE EL VEHICULO A TRAVEZ DE LA PLACA
+            for (int i = 0; i < vehiculos.Count; i++)
             {
-                writer.WriteLine(v.Placa);
-                writer.WriteLine(v.Marca);
-                writer.WriteLine(v.Modelo);
-                writer.WriteLine(v.Color);
-                writer.WriteLine(v.Precio);
+                if (Int32.Parse(textBox1.Text) == vehiculos[i].Placa)
+                {
+                    MessageBox.Show(" este vehiculo ya existe en el sistema!");
+                }
+                else
+                {
+                    Vehiculo vehiculoTemp = new Vehiculo();
+                    vehiculoTemp.Placa = Int32.Parse(textBox1.Text);
+                    vehiculoTemp.Marca = textBox2.Text;
+                    vehiculoTemp.Modelo = textBox3.Text;
+                    vehiculoTemp.Color = textBox4.Text;
+                    vehiculoTemp.Precio = float.Parse(textBox5.Text);
+                    vehiculos.Add(vehiculoTemp);
+
+                    FileStream stream = new FileStream("vehiculos.txt", FileMode.OpenOrCreate, FileAccess.Write);
+
+                    StreamWriter writer = new StreamWriter(stream);
+
+                    foreach (var v in vehiculos)
+                    {
+                        writer.WriteLine(v.Placa);
+                        writer.WriteLine(v.Marca);
+                        writer.WriteLine(v.Modelo);
+                        writer.WriteLine(v.Color);
+                        writer.WriteLine(v.Precio);
+                    }
+                    writer.Close();
+
+                }
+
             }
-            writer.Close();
+
             textBox1.Text = "";
             textBox2.Text = "";
             textBox3.Text = "";
