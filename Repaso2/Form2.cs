@@ -37,7 +37,7 @@ namespace Repaso2
             alqTemp.Fin = monthCalendar2.SelectionStart;
             alqTemp.Kilometros = Int32.Parse(textBox3.Text);
             alquileres.Add(alqTemp);
-            FileStream stream = new FileStream("alquiler.txt", FileMode.OpenOrCreate, FileAccess.Write);
+            FileStream stream = new FileStream(@"..\..\alquiler.txt", FileMode.OpenOrCreate, FileAccess.Write);
 
             StreamWriter writer = new StreamWriter(stream);
 
@@ -56,7 +56,7 @@ namespace Repaso2
         }
         private void Leer()
         {
-            FileStream stream = new FileStream("alquiler.txt", FileMode.Open, FileAccess.Read);
+            FileStream stream = new FileStream(@"..\..\alquiler.txt", FileMode.Open, FileAccess.Read);
             StreamReader reader = new StreamReader(stream);
 
             while (reader.Peek() > -1)

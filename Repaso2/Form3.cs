@@ -118,32 +118,30 @@ namespace Repaso2
             for (int i = 0; i < l2.Count; i++)
             {
                 for (int j = 0; j < l3.Count; j++)
-                {                 
+                {
                     if (l2[i].Placa == l3[j].Placa)
                     {
                         Calculo dato = new Calculo();
-                        //guardamos el número de empleado
                         dato.Placa = l2[i].Placa;
                         dato.Nombre = l1[j].Nombre;
-                        dato.Marca= l2[i].Marca;
+                        dato.Marca = l2[i].Marca;
                         dato.Modelo = l2[i].Modelo;
                         dato.Color = l2[i].Color;
                         dato.Precio_por_Kilometro = l2[i].Precio;
                         dato.Fecha_de_Devolucion = l3[j].Fin;
                         dato.Total_a_pagar = l2[i].Precio * l3[j].Kilometros;
 
-                        ////Guardamos en la lista 
                         datos.Add(dato);
                     }
                 }
-            }
-            //Mostrar en el gridview la lista de empleadoSueldos
-            dataGridView3.DataSource = null;
+            
+
+        }
+        dataGridView3.DataSource = null;
             dataGridView3.DataSource = datos;
             dataGridView3.Refresh();
-            float mayorprom = datos.Max(ve => ve.Total_a_pagar);
-            Calculo mayor = datos.OrderByDescending(ve => ve.Total_a_pagar).First();
-            label3.Text =  "el vehiculo con mas kilometros recorridos tiene un total de: "+ Convert.ToString( l3[0].Kilometros)+" Kilometros";
+            int mayor = l3.Max(k => k.Kilometros);
+            label3.Text = "El mayor recorrido fue de " + mayor.ToString()+" Kilometros";
         }
     }
 }

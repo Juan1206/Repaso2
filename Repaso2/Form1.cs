@@ -31,74 +31,74 @@ namespace Repaso2
         private void button2_Click(object sender, EventArgs e)
         {
 
-            //VERIFICAR SI YA EXISTE EL VEHICULO A TRAVEZ DE LA PLACA
-            for (int i = 0; i < vehiculos.Count; i++)
+            bool existe = vehiculos.Exists(v => v.Placa == Convert.ToInt32(textBox1.Text));
+
+            //si existe indicarlo con un Messagebox
+            if (existe)
             {
-                if (Int32.Parse(textBox1.Text) == vehiculos[i].Placa)
-                {
-                    MessageBox.Show(" este vehiculo ya existe en el sistema!");
-                }
-                else
-                {
-                    Vehiculo vehiculoTemp = new Vehiculo();
-                    vehiculoTemp.Placa = Int32.Parse(textBox1.Text);
-                    vehiculoTemp.Marca = textBox2.Text;
-                    vehiculoTemp.Modelo = textBox3.Text;
-                    vehiculoTemp.Color = textBox4.Text;
-                    vehiculoTemp.Precio = float.Parse(textBox5.Text);
-                    vehiculos.Add(vehiculoTemp);
-
-                    FileStream stream = new FileStream("vehiculos.txt", FileMode.OpenOrCreate, FileAccess.Write);
-
-                    StreamWriter writer = new StreamWriter(stream);
-
-                    foreach (var v in vehiculos)
-                    {
-                        writer.WriteLine(v.Placa);
-                        writer.WriteLine(v.Marca);
-                        writer.WriteLine(v.Modelo);
-                        writer.WriteLine(v.Color);
-                        writer.WriteLine(v.Precio);
-                    }
-                    writer.Close();
-
-                }
-
+                MessageBox.Show("Esa placa ya existe", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+            else
+            {
+                Vehiculo vehiculo = new Vehiculo();
 
+                vehiculo.Placa = Convert.ToInt32(textBox1.Text);
+                vehiculo.Marca = textBox2.Text;
+                vehiculo.Modelo = textBox3.Text;
+                vehiculo.Color = textBox4.Text;
+                vehiculo.Precio = float.Parse(textBox5.Text);
+                vehiculos.Add(vehiculo);
+                guardar();
+            }
             textBox1.Text = "";
             textBox2.Text = "";
             textBox3.Text = "";
             textBox4.Text = "";
             textBox5.Text = "";
-
         }
-        private void Leer()
-        {
-            FileStream stream = new FileStream("vehiculos.txt", FileMode.Open, FileAccess.Read);
-            StreamReader reader = new StreamReader(stream);
-
-            while (reader.Peek() > -1)
+            private void Leer()
             {
-                Vehiculo vehiculoTemp = new Vehiculo();
-                vehiculoTemp.Placa = Int32.Parse(reader.ReadLine());
-                vehiculoTemp.Marca = reader.ReadLine();
-                vehiculoTemp.Modelo = reader.ReadLine();
-                vehiculoTemp.Color = reader.ReadLine();
-                vehiculoTemp.Precio = float.Parse(reader.ReadLine());
+                FileStream stream = new FileStream(@"..\..\vehiculos.txt", FileMode.Open, FileAccess.Read);
+                StreamReader reader = new StreamReader(stream);
 
-                vehiculos.Add(vehiculoTemp);
+                while (reader.Peek() > -1)
+                {
+                    Vehiculo vehiculoTemp = new Vehiculo();
+                    vehiculoTemp.Placa = Int32.Parse(reader.ReadLine());
+                    vehiculoTemp.Marca = reader.ReadLine();
+                    vehiculoTemp.Modelo = reader.ReadLine();
+                    vehiculoTemp.Color = reader.ReadLine();
+                    vehiculoTemp.Precio = float.Parse(reader.ReadLine());
 
+                    vehiculos.Add(vehiculoTemp);
+
+                }
+                reader.Close();
             }
-            reader.Close();
-        }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-            Form3 f3 = new Form3();
-            this.Hide();
-            f3.ShowDialog();
-            this.Close();
-        }
+            private void button3_Click(object sender, EventArgs e)
+            {
+                Form3 f3 = new Form3();
+                this.Hide();
+                f3.ShowDialog();
+                this.Close();
+            }
+            private void guardar()
+            {
+                FileStream stream = new FileStream(@"..\..\vehiculos.txt", FileMode.OpenOrCreate, FileAccess.Write);
+
+                StreamWriter writer = new StreamWriter(stream);
+
+                foreach (var v in vehiculos)
+                {
+                    writer.WriteLine(v.Placa);
+                    writer.WriteLine(v.Marca);
+                    writer.WriteLine(v.Modelo);
+                    writer.WriteLine(v.Color);
+                    writer.WriteLine(v.Precio);
+                }
+                writer.Close();
+            }
+        
     }
 }
